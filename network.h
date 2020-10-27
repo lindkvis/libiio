@@ -96,6 +96,9 @@ int create_socket(const struct addrinfo *addrinfo, unsigned int timeout);
 /* Resolves all IIO hosts on the available networks, and passes back a linked list */
 int dnssd_find_hosts(struct dns_sd_discovery_data ** ddata);
 
+/* Use dnssd to resolve a given hostname */
+int dnssd_resolve_host(const char *hostname, char *ip_addr, const int addr_len);
+
 /* Frees memory of one entry on the list */
 void dnssd_free_discovery_data(struct dns_sd_discovery_data *d);
 
@@ -115,9 +118,20 @@ void remove_dup_discovery_data(struct dns_sd_discovery_data **ddata);
 /* port knocks  */
 void port_knock_discovery_data(struct dns_sd_discovery_data **ddata);
 
+#else
+/* This is called from network.c without any guard. Hence we need to provide this in case
+ * HAVE_DNS_SD is not defined
+ */
+static inline int dnssd_resolve_host(const char *hostname, char *ip_addr, const int addr_len)
+{
+	return -ENOENT;
+}
 #endif /* HAVE_DNS_SD */
 
 /* Used everywhere */
+#ifndef DNS_SD_ADDRESS_STR_MAX
+#define DNS_SD_ADDRESS_STR_MAX (40) /* IPv6 Max = 4*8 + 7 + 1 for NUL */
+#endif
 #define DEFAULT_TIMEOUT_MS 5000
 #define IIOD_PORT 30431
 
