@@ -86,5 +86,10 @@ set_target_properties(
                                     C_EXTENSIONS OFF
 )
 
-# We don't install any of these, they are examples, not tools. We build them to
-# make sure they build/work, not to deploy them.
+# We install the examples if asked for benchmarking purposes
+
+if(NOT SKIP_INSTALL_ALL)
+    install(TARGETS ${IIO_TESTS_TARGETS} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+    install(FILES load.sh unload.sh DESTINATION ${CMAKE_INSTALL_BINDIR})
+endif()
+
