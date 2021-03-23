@@ -90,6 +90,6 @@ set_target_properties(
 
 if(NOT SKIP_INSTALL_ALL)
     install(TARGETS ${IIO_TESTS_TARGETS} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-    install(FILES load.sh unload.sh DESTINATION ${CMAKE_INSTALL_BINDIR})
+    install(PROGRAMS load.sh unload.sh DESTINATION ${CMAKE_INSTALL_BINDIR})
 endif()
 

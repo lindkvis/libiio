@@ -1,6 +1,6 @@
 #!/bin/sh
-#mkdir -p /sys/kernel/config
-#mount -t configfs none /sys/kernel/config
+mkdir -p /sys/kernel/config
+mount -t configfs none /sys/kernel/config
 modprobe industrialio
 modprobe industrialio-configfs
 modprobe industrialio-sw-device
